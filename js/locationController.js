@@ -1,6 +1,5 @@
 app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', function($scope, Restangular,locationsService){
 	
-
 	locationsService.getLocations().then(function(locationList){
 		$scope.locations = locationList;
 		$scope.showLocation = $scope.locations[0];
