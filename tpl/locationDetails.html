@@ -1,8 +1,16 @@
-<div class="bg-danger">
-<h3>{{locToEdit().name}}</h3>
-<p>{{ locToEdit().description }}</p>
-<p>Longitude:{{ locToEdit().longitude }}</p>
-<p>Latitude:{{ locToEdit().latitude }}</p>
+<div>
+	<div style="float:left;align-content:center;width:50%">
+		<div style="text-align:center">
+			<div style="color:orange;text-size:10px;clear:both">Edit</div>
+			<div style="color:orange;text-size:10px;">Activities</div>
+			<h1>{{locToEdit().name}}</h1>
+		</div>
+		<div style="padding-left:20%;margin-top:5%">
+			<p>{{ locToEdit().description }}</p>
+			<p>Longitude:{{ locToEdit().longitude }}</p>
+			<p>Latitude:{{ locToEdit().latitude }}</p>
+			<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data={{ locToEdit().code }}" alt="QR Code for this location"/>
+		</div>
+	</div>
 
-<p>QrCode: {{ locToEdit().code }}</p>
 </div>

@@ -28,7 +28,7 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 				$scope.locations[listLength] = location;
 			});
 		}
-		location.editing = false;
+		$scope.toggleEditLocation();
 	};
 	
 	$scope.delete = function(location){
@@ -39,7 +39,8 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 	};
 
 	insertingNewLocation = false;
-	$scope.toggleEditLocation = function(location){
+
+	$scope.toggleEditLocation = function(){
 		location.editing = !location.editing;
 	};
 
@@ -58,12 +59,12 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 	$scope.showInsertLocation=function (location){
 		return insertingNewLocation;
 	};
-	$scope.insertLocationText = function(location){
+	$scope.insertLocationText = function(){
 		return (insertingNewLocation ? "Hide" : "Insert New");
 	}
 
-	$scope.enableEditing = function(){
-		return false;
+	$scope.editingEnabled = function(){
+		return location.editing;
 	}
 
 	locationPos = 0;

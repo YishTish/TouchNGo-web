@@ -32,8 +32,8 @@ app.directive('btdtHeader', function(){
 app.directive('editLocation', function(){
     return{
         restrict: "AEC",
-        template: "<span style=\"color:red\">Test</span>",
-        replace: 'true'
+        templateUrl: "tpl/locationForm.html",
+        replace: 'true',
     }
 });
 
@@ -42,7 +42,6 @@ app.directive('locationDetails',function(){
         restrict: "AEC",
         templateUrl: "tpl/locationDetails.html",
         replace: 'true',
-     //   scope: 'locationCtrl'
     }
 });
 
