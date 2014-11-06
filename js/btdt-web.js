@@ -8,13 +8,16 @@ app.config([
 		}).when('/locations',{
 			templateUrl: 'tpl/locations.html',
 			controller: 'locationCtrl'
+		}).when('/locations1',{
+			templateUrl: 'tpl/locations1.html',
+			controller: 'locationCtrl'
 		})
 	}
 	]);
 
 app.config(function (RestangularProvider){
-	RestangularProvider.setBaseUrl('http://localhost:9000');
-});
+		RestangularProvider.setBaseUrl('http://localhost:9000')
+	});
 
 
 app.factory("btdtResource", function($resource){

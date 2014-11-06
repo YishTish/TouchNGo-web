@@ -46,10 +46,9 @@ app.controller("userCtrl", function($scope, btdtResource){
 	$scope.enableEditUser = function(user){
 		user.editing = !user.editing;
 	};
+	
 	$scope.showEditUser=function (user){
-		if(user.editing == true)
-			return true;
-		else return false;
+		return user.editing;
 	};
 	$scope.editUserText = function(user){
 		if(user.editing == true)

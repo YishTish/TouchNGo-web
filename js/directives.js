@@ -34,6 +34,19 @@ app.directive('editLocation', function(){
         restrict: "AEC",
         templateUrl: "tpl/locationForm.html",
         replace: 'true',
+        scope:{
+            newLoc: '=ngModel'
+        },
+        link: function(scope, element, attr){
+            console.log(newLoc);
+            if(!scope.loc || scope.loc==undefined || scope.loc=="")
+            {
+               scope.loc = {name: "NAME", description: "DESCRIPTION", longitude:"LONG", latitude: "LAT"};
+               console.log("as");
+           }
+           else
+                console.log(scope.loc+ " zzz");
+        }
     }
 });
 
@@ -51,6 +64,5 @@ app.directive('locationList', function(){
         replace: 'true',
         scope: 'true',
         templateUrl: 'tpl/locationList.html',
-        //controller: 'locationCtrl',
     }
 });

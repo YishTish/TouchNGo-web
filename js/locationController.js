@@ -6,8 +6,9 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 		for(var i=0; i< $scope.locations.length; i++){
 			$scope.locations[i].indexPos = i;
 		}
+		$scope.location = $scope.locations[0];
 	});
-	
+
 	$scope.saveLocation = function(data){
 		var location = _.clone(data);
 		data.name = data.description = data.longitude = data.latitude = '';
@@ -27,7 +28,8 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 				$scope.locations[listLength] = location;
 			});
 		}
-		$scope.toggleEditLocation();
+		//$scope.toggleEditing();
+		editing = false;
 	};
 	
 	$scope.delete = function(location){
@@ -37,52 +39,61 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 		});
 	};
 
+
 	insertingNewLocation = false;
+	formTitle = "New Location";
 
-	$scope.toggleEditLocation = function(){
-		location.editing = !location.editing;
-	};
 
-	$scope.showEditLocation=function (location){
-		return location.editing;
-	};
-
-	$scope.editLocationText = function(location){
-		return (location.editing ? "Hide" : "Edit");
+	$scope.getFormTitle = function(){
+		return formTitle;
 	}
 
-	$scope.enableInsertLocation = function(){
-		insertingNewLocation = !insertingNewLocation;
-	};
+	$scope.createLocation = function(){
+		$scope.currentLocation=null;
+		editing = true;
+		currentItemIndex = -1;
+		formTitle = "Edit Location";
+		console.log($scope.currentLocation);
+	}
 
-	$scope.showInsertLocation=function (location){
-		return insertingNewLocation;
-	};
+	
+	editing = false;
+	$scope.editLocation = function(){
+		/*
+		$scope.location  = $scope.locations[index];
+		if(index < 0){
+			indexPos = -1;
+			locationPos= -1;
+			$scope.location = {id:"",name:"",description:"",longitude:"",latitude:"",code:""}
+		}
+		console.log($scope.location);
+		showForm = true;
+		*/
+		console.log("test");
+		editing = true;
+		$scope.currentLocation = $scope.location;
+		formTitle = "Edit Location";
+	}
+
 	$scope.insertLocationText = function(){
-		return (insertingNewLocation ? "Hide" : "Insert New");
+		return (insertingNewLocation ? "Hide" : "Create new");
+	}
+	
+	$scope.isEditing = function(){
+		return editing;
 	}
 
-	$scope.editingEnabled = function(){
-		return location.editing;
-	}
+	currentItemIndex = 0;
 
-	locationPos = 0;
+	$scope.showCurrent = function(locationIndex){
+		$scope.location = $scope.locations[locationIndex];
+		currentItemIndex = locationIndex;
+		editing = false;
 
-	$scope.updateCurrent = function(location){
-		locationPos = location.indexPos;
 	};
 
-	$scope.locToEdit = function(){
-		if($scope.locations == null || $scope.locations.length==0){
-			return {id:"", name:"", description:"",longitude:"",latitude:""};
-		}
-		else{
-			return $scope.locations[locationPos];
-		}
-	};
-
-	$scope.getLocationPos = function(){
-		return locationPos;
+	$scope.getCurrentIndex = function(){
+		return currentItemIndex;
 	}
 
 }]);
