@@ -1,8 +1,47 @@
-<div class="bg-danger">
-<h3>{{locToEdit().name}}</h3>
-<p>{{ locToEdit().description }}</p>
-<p>Longitude:{{ locToEdit().longitude }}</p>
-<p>Latitude:{{ locToEdit().latitude }}</p>
+<div  class="detailsWrapper">
+	<div>
+		<div class="detailsTitle">
+			<div class="itemTitle">{{location.name}}</div>
+			<div class="itemActions" style="font-size: 10px">
+					<div class="actionIcon" ng-click="editLocation()"><i class="actionIcon fa fa-edit" title="Edit"> </i></div>
+					<div class="actionIcon" ><i class="fa fa-check-circle" title="Activities"> </i></div>
+					<div class="actionIcon" ><i class="fa fa-trash-o" title="Delete"> </i></div>
+			</div>
+		</div>
+		<div class="itemDetails" ng-if="!isEditing()">
+			<p>{{ location.description }}</p>
+			<div>
+				<div style="float:left">Longitude: {{ location.longitude}}</div>
+				<div style="float:right">Latitude: {{ location.latitude}}</div>
+			</div>
+			<img src="https://api.qrserver.com/v1/create-qr-code/?size=350x350&data={{ location.code }}" alt="QR Code for this location"/>
+		</div>
+		
+		<div class="itemDetails" ng-if="isEditing()">
+			<form name="insertLocationForm" ng-submit="saveLocation(currentLocation)" class="form-horizontal">
+				<fieldset>
+					<div class="form-group">
+						<label for="currentLocation.name" class="col-lg-2 control-label">Name</label>
+						<input type="text" id="currentLocation.name" ng-model="currentLocation.name" placeholder="Name" class="form-control"/>
+					</div>
+					<div class="form-group">
+							<label for="currentLocation.description" class="col-lg-2 control-label">Description</label>
+			 			<input type="text" ng-model="currentLocation.description" id=="currentLocation.description" placeholder="Description" class="form-control"/>
+					</div>
+					<div class="form-group">
+							<label for="currentLocation.longitude" class="col-lg-2 control-label">Longitude</label>
+							<input type="text" ng-model="currentLocation.longitude" id="currentLocation.longitude" placeholder="Longitue" class="form-control"/>
+					</div>
+					<div class="form-group">
+							<label for="currentLocation.latitude" class="col-lg-2 control-label">Latitude</label>
+							<input type="text" ng-model="currentLocation.latitude" id="currentLocation.latitude" placeholder="Latitude" class="form-control"/>
+					</div>
+					<div class="form-group">
+							<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 
-<p>QrCode: {{ locToEdit().code }}</p>
+	</div>
 </div>

@@ -32,8 +32,21 @@ app.directive('btdtHeader', function(){
 app.directive('editLocation', function(){
     return{
         restrict: "AEC",
-        template: "<span style=\"color:red\">Test</span>",
-        replace: 'true'
+        templateUrl: "tpl/locationForm.html",
+        replace: 'true',
+        scope:{
+            newLoc: '=ngModel'
+        },
+        link: function(scope, element, attr){
+            console.log(newLoc);
+            if(!scope.loc || scope.loc==undefined || scope.loc=="")
+            {
+               scope.loc = {name: "NAME", description: "DESCRIPTION", longitude:"LONG", latitude: "LAT"};
+               console.log("as");
+           }
+           else
+                console.log(scope.loc+ " zzz");
+        }
     }
 });
 
@@ -42,7 +55,6 @@ app.directive('locationDetails',function(){
         restrict: "AEC",
         templateUrl: "tpl/locationDetails.html",
         replace: 'true',
-     //   scope: 'locationCtrl'
     }
 });
 
@@ -52,6 +64,5 @@ app.directive('locationList', function(){
         replace: 'true',
         scope: 'true',
         templateUrl: 'tpl/locationList.html',
-        //controller: 'locationCtrl',
     }
 });
