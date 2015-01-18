@@ -1,13 +1,21 @@
-<div class="pageTitle" ng-controller="locationCtrl">
-	<h1 >Locations</h1>
-	<span style="float:left" ng-click="createLocation()"> <i class="fa fa-location-arrow"> </i> {{ insertLocationText() }}</span>
-</div>
+<div  ng-controller="locationCtrl">
+	<div class="pageTitle">
+		<!--<h1 >Locations</h1>-->
+		<div class="sub-nav">
+			<div ng-click="divToDisplay='new'"> <i class="fa fa-plus-circle"> </i> New </div>
+			<div > | </div>
+			<div ng-click="divToDisplay='list'"> <i class="fa fa-list"> </i> List</div>
+		</div>
+		<!--<span ng-click="openModal('sm')"> <i class="fa fa-location-arrow"> </i> New </span>-->
+	</div>
+	<div class="clearfix"></div>
+
 <div style="clear:both;width:80%">
 
-	<edit-location ng-show="true"></edit-location>
-
-	<location-list style="width:40%;margin-right:30px" ng-hide="true"></location-list>
+	<edit-location div-to-display="divToDisplay" ng-show="divToDisplay == 'new'"></edit-location>
+	<location-list editing="editing" ng-show="divToDisplay=='list'"></location-list>
 	<div>
-	<location-details location="{{ indexPos }}" ng-hide="true"></location-details>
+	<location-details editing="editing" location="selectedItem" ng-show="divToDisplay=='list'"></location-details>
 	</div>
+</div>
 </div>

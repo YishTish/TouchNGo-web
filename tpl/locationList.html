@@ -1,8 +1,15 @@
 <div class="locationDiv">
-	<div ng-repeat="location in locations" class="itemList" ng-class="{'itemListSelected': $index==getCurrentIndex(), 'itemListNotSelected': $index!=getCurrentIndex() }" ng-click="showCurrent($index)">
+	<div ng-repeat="location in locations" class="itemList" ng-class="{'itemListSelected': $index==selectedItem, 'itemListNotSelected': $index!=selectedItem }" ng-click="selectItem($index)">
 		<div class="words">
 			<div>{{ location.name }} </div>
-			<div> {{location.description}}</div>
+			<div> {{getShortDescription(location.description)}}</div>
+		</div>
+		<div class="actionsDiv">
+			<ul class="itemActions">
+				<li class="actionIcon" tooltip="Edit" tooltip-placement="left" ng-click="startEditing()"><i class="actionIcon fa fa-edit" title="Edit"> </i></li>
+				<!--<li class="actionIcon" tooltip="Activities" tooltip-placement="left"><i class="fa fa-check-circle" title="Activities"> </i></li>-->
+				<li class="actionIcon"  tooltip="Delete" tooltip-placement="left"><i class="fa fa-trash-o"  ></i></li>
+			</ul>
 		</div>
 	</div>
 </div>

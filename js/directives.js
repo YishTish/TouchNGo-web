@@ -29,32 +29,37 @@ app.directive('btdtHeader', function(){
     }
 });
 
-app.directive('editLocation', function(){
+app.directive('editLocation', ['firebaseService', function(firebaseService){
     return{
         restrict: "AEC",
         templateUrl: "tpl/locationForm.html",
         replace: 'true',
-        scope:{
-            newLoc: '=ngModel'
+        scope: {
+            divToDisplay: '='
         },
         link: function(scope, element, attr){
-            console.log(newLoc);
             if(!scope.loc || scope.loc==undefined || scope.loc=="")
             {
-               scope.loc = {name: "NAME", description: "DESCRIPTION", longitude:"LONG", latitude: "LAT"};
-               console.log("as");
+               scope.loc = {name: "", description: "", longitude:"", latitude: ""};
            }
            else
-                console.log(scope.loc+ " zzz");
-        }
-    }
-});
+                console.log(scope.loc);
+        },
+        controller: ['$scope' , function($scope){
+              $scope.saveLocation = function (data) {
+              console.log(data);
+              firebaseService.add("locations",data);
+              $scope.divToDisplay = "list";
+          }
+        }]
+        }}]
+);
 
 app.directive('locationDetails',function(){
     return{
         restrict: "AEC",
         templateUrl: "tpl/locationDetails.html",
-        replace: 'true',
+        replace: 'true'
     }
 });
 
@@ -62,7 +67,19 @@ app.directive('locationList', function(){
     return{
         restrict: 'AEC',
         replace: 'true',
-        scope: 'true',
-        templateUrl: 'tpl/locationList.html',
+        templateUrl: 'tpl/locationList.html'
+}
+});
+
+
+app.directive('saveLocation', function(){
+    return{
+        restrict: 'A',
+        link: function(scope, elem, attr){
+            elem.bind('click',function(){
+                scope.divToDisplay = "list";
+                console.log(elem);
+            })
+        }
     }
 });

@@ -1,26 +1,27 @@
 <div class="detailsWrapper" style="width:50%float:right">
 	<div class="itemTitle">{{ getFormTitle() }}</div>
 	<div class="itemDetails">
-		<form name="insertLocationForm" ng-submit="saveLocation(loc)" class="form-horizontal" ng-controller="locationCtrl">
+		<form name="insertLocationForm" ng-submit="saveLocation(location)" class="form-horizontal">
 			<fieldset>
 				<div class="form-group">
-					<label for="loc.name" class="col-lg-2 control-label">Name</label>
-					<input type="text" id="loc.name" ng-model="loc.name" placeholder="Name" class="form-control"/>
+					<!--<label for="location.name" class="col-lg-2 control-label">Name</label>-->
+					<input type="text" id="location.name" ng-model="location.name" placeholder="Name" class="form-control"/>
 				</div>
 				<div class="form-group">
-						<label for="loc.description" class="col-lg-2 control-label">Description</label>
-		 			<input type="text" ng-model="loc.description" id=="loc.description" placeholder="Description" class="form-control"/>
+						<!--<label for="location.description" class="col-lg-2 control-label">Description</label>-->
+		 			<input type="text" ng-model="location.description" id="location.description" placeholder="Description" class="form-control"/>
 				</div>
 				<div class="form-group">
-						<label for="loc.longitude" class="col-lg-2 control-label">Longitude</label>
-						<input type="text" ng-model="loc.longitude" id="loc.longitude" placeholder="Longitue" class="form-control"/>
+						<!--<label for="location.longitude" class="col-lg-2 control-label">Longitude</label>-->
+						<input type="text" ng-model="location.longitude" id="location.longitude" placeholder="Longitue" class="form-control"/>
 				</div>
 				<div class="form-group">
-						<label for="loc.latitude" class="col-lg-2 control-label">Latitude</label>
-						<input type="text" ng-model="loc.latitude" id="loc.latitude" placeholder="Latitude" class="form-control"/>
+						<!--<label for="location.latitude" class="col-lg-2 control-label">Latitude</label>-->
+						<input type="text" ng-model="location.latitude" id="location.latitude" placeholder="Latitude" class="form-control"/>
 				</div>
 				<div class="form-group">
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button type="submit" ng-click="divToDisplay='list'" class="btn btn-primary">Save</button>
+					<button type="submit" ng-click="editing=false" class="btn btn-cancel">Cancel</button>
 				</div>
 			</fieldset>
 		</form>

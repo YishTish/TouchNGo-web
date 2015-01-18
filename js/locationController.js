@@ -1,53 +1,73 @@
-app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', function($scope, Restangular,locationsService){
-	
-	locationsService.getLocations().then(function(locationList){
-		$scope.locations = locationList;
+app.controller("locationCtrl",['$scope', "firebaseService", function($scope, firebaseService){
+
+	//var ref = new Firebase(fbURL+"/locations");
+	//var sync = $firebase(ref);
+	var template;
+
+
+	$scope.divToDisplay = "list";
+
+	formTitle = "New Location";
+
+	var resetTemplate = function(){
+		return {
+			name: "",
+			description: "",
+			longitude: "",
+			latitude: "",
+			code: ""
+		}
+	};
+
+	//$scope.locations = sync.$asArray();
+	//var fbService = new firebaseService();
+	$scope.locations = firebaseService.getList("locations");
+
+	$scope.locations.$loaded().then(function(){
 		$scope.showLocation = $scope.locations[0];
 		for(var i=0; i< $scope.locations.length; i++){
 			$scope.locations[i].indexPos = i;
 		}
-		$scope.location = $scope.locations[0];
-	});
+		$scope.selectItem(0);
 
-	$scope.saveLocation = function(data){
-		var location = _.clone(data);
-		data.name = data.description = data.longitude = data.latitude = '';
-		if(location.id > 0){
-			Restangular.one('location').customPUT(location).then(function(data){
-				//location.editing = false;
-				console.log(data);
-			});
-		}
-		else{
-			Restangular.one('location').customPOST(location).then(function(data){
-				location.editing = false;
-				location.id = data.id;
-				location.code = data.code;
-				var listLength = $scope.locations.length;
-				insertingNewLocation = false;
-				$scope.locations[listLength] = location;
-			});
-		}
-		//$scope.toggleEditing();
-		editing = false;
-	};
-	
-	$scope.delete = function(location){
-		Restangular.one("location").customDELETE(location.id).then(function(){
-			var index = $scope.locations.indexOf(location);
-			$scope.locations.splice(index, 1);
-		});
+	})
+
+	$scope.editLocation = function(index, loc){
+		firebaseService.update("locations", index, loc).then(
+			function(response){
+				console.log("location updated successfully");
+			}
+		)
 	};
 
+	$scope.saveLocation = function(location){
+		//$scope.location.$save();
+		if(location.$id)
+			$scope.locations.$save(location);
+		else
+			$scope.locations.$add(location);
+		$scope.editing = false;
+		//firebaseService.update('locations',location);
+	}
 
-	insertingNewLocation = false;
-	formTitle = "New Location";
+	$scope.delete = function(index){
+		$scope.locations.$remove(index);
+		//firebaseService.remove("locations",$scope.locations[index]);
+		/*$scope.locations.$remove(index).then(function(){
+			console.log("Element deleted");
+		});*/
+	};
 
 
 	$scope.getFormTitle = function(){
 		return formTitle;
 	}
 
+	$scope.getShortDescription = function(description){
+		var suffix = (description.length > 29) ? "..." : "";
+		return description.substr(0,30)+suffix;
+	}
+	/*
 	$scope.createLocation = function(){
 		$scope.currentLocation=null;
 		editing = true;
@@ -57,7 +77,7 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 	}
 
 	
-	editing = false;
+
 	$scope.editLocation = function(){
 		/*
 		$scope.location  = $scope.locations[index];
@@ -68,23 +88,17 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 		}
 		console.log($scope.location);
 		showForm = true;
-		*/
 		console.log("test");
-		editing = true;
-		$scope.currentLocation = $scope.location;
-		formTitle = "Edit Location";
-	}
+	editing = true;
+	$scope.currentLocation = $scope.location;
+	formTitle = "Edit Location";
+}
+	 */
 
 	$scope.insertLocationText = function(){
 		return (insertingNewLocation ? "Hide" : "Create new");
 	}
 	
-	$scope.isEditing = function(){
-		return editing;
-	}
-
-	currentItemIndex = 0;
-
 	$scope.showCurrent = function(locationIndex){
 		$scope.location = $scope.locations[locationIndex];
 		currentItemIndex = locationIndex;
@@ -95,5 +109,19 @@ app.controller("locationCtrl",['$scope', 'Restangular', 'locationsService', func
 	$scope.getCurrentIndex = function(){
 		return currentItemIndex;
 	}
+
+
+	$scope.selectItem = function(index){
+		$scope.selectedItem = index;
+		$scope.location = $scope.locations[index];
+		//$scope.editing = false;
+	}
+
+	$scope.editing = false;
+
+	$scope.startEditing = function(){
+		$scope.editing = true;
+	};
+
 
 }]);

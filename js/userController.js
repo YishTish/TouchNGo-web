@@ -1,5 +1,12 @@
-app.controller("userCtrl", function($scope, btdtResource){
-	$scope.users = btdtResource.query();
+app.controller("userCtrl", [ "$scope","$firebase", "fbURL",function($scope, $firebase, fbURL){
+
+	var ref = new Firebase(fbURL+'/users');
+	var sync = $firebase(ref);
+
+
+
+	$scope.users = sync.$asArray();
+	$scope.user = { fname: "", lname: "", email:""};
 	
 	for(user in $scope.users){
 		user.editing = false;
@@ -7,36 +14,29 @@ app.controller("userCtrl", function($scope, btdtResource){
 
 	insertingNewUser = false;
 
-	$scope.saveUser = function(user){
-		if(user.id > 0){
-			user.$update();
-		}
-		else{
-			user.type="0";
-			btdtResource.save(user);
-		}
-		$scope.users.$promise.then(function(result){
-			$scope.users = btdtResource.query();	
-		});
-	};
-
 	$scope.editUser = function(user){
 		user.$update();
 	};
 
-	$scope.insertUser = function(){
-		$scope.user.type = 0;
-		btdtResource.save($scope.user);
-		$scope.users.$promise.then(function(result){
-			$scope.users = btdtResource.query();	
-		});
-		
-		//user.$save();
+	$scope.insertUser = function(user,index){
+		console.log(user);
+		if(user.$id && user.$id!=""){
+			delete user['editing'];
+			$scope.users.$save(index);
+		}
+		else{
+			user.type = "0";
+			$scope.users.$add(user);
+		}
+		//console.log(user);
+		//$scope.users.$add($scope.user).then(function(response){
+		//	console.log(response);
+		//});
 	};
 
 
-	$scope.deleteUser = function(user){
-		user.$delete();
+	$scope.deleteUser = function(userIndex){
+		$scope.users.$remove(userIndex);
 	};
 
 	$scope.showUser= function(userId){
@@ -71,5 +71,10 @@ app.controller("userCtrl", function($scope, btdtResource){
 			return "Insert new";
 	}
 
+	$scope.selectItem = function(index){
+		$scope.selectedItem = index;
+		$scope.user = $scope.users[index];
+	}
 
-});
+
+}]);

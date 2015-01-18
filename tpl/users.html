@@ -1,37 +1,47 @@
-<script type="text/ng-template" id="userForm.html">
-	<form name="insertUserForm" ng-submit="saveUser(user)">
-		<input type="text" ng-model="user.fname" placeholder="First Name"/>
-		<input type="text" ng-model="user.lname" placeholder="Last Name"/>
-		<input type="email" ng-model="user.email" placeholder="Email address"/>
-		<input type="hidden" ng-model="user.type" value="0" />
-		<button type="submit">Save</button>
-	</form>
-</script>
-
 <div class="usersDiv entityWrapper" ng-controller="userCtrl">
-<div>
-		<div><div ng-click="enableInsertUser()"><span ng-bind="insertUserText()"></span></div></div>
-		<div ng-show="showInsertUser()" ng-include="'userForm.html'">
-							
+
+	<div class="pageTitle">
+		<!--<h1 >Locations</h1>-->
+		<div class="sub-nav" ng-init="divToDisplay='list'">
+			<div ng-click="divToDisplay='new'"> <i class="fa fa-plus-circle"> </i> New </div>
+			<div > | </div>
+			<div ng-click="divToDisplay='list'"> <i class="fa fa-list"> </i> List</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div ng-show="divToDisplay=='new'" ng-include="'tpl/userForm.html'">
+
+	</div>
+	<!--<ul class="userDiv">-->
+		<!--<li class="userLi" ng-repeat="user in users"  ng-show="true">-->
+	<div class="listWrapper">
+		<div ng-repeat="user in users" class="itemList" ng-show="true" ng-class="{'itemListSelected': $index==selectedItem, 'itemListNotSelected': $index!=selectedItem }" ng-click="selectItem($index)">
+			<div class="words">
+				<div>{{user.fname}} {{user.lname}}</div>
+				<div>{{user.email}}</div>
+			</div>
+			<!--<span class="userName"> {{user.fname}} {{user.lname}} </span>-->
+			<!--<span class="userEmail"><a href="mailto: {{user.email}}">{{user.email}}</a></span>-->
+			<!--<span class="userUpdate">-->
+				<!--<div ng-click="enableEditUser(user)">-->
+					<!--<span ng-bind="editUserText(user)"></span>-->
+				<!--</div>-->
+				<!--<div ng-show="showEditUser(user)" ng-include="'tpl/userForm.html'">-->
+					<!---->
+				<!--</div>	-->
+			<!--</span>-->
+			<!--<span class="userDelete"><a href="javascript:void(0)" ng-really-message="Deleting a member cannot be undone. Are you sure?" ng-really-click="deleteUser($index)" ng-really-click>Delete</a></span>-->
+			<div class="actionsDiv">
+				<ul class="itemActions">
+					<li class="actionIcon" tooltip="Edit" tooltip-placement="left" ng-click="startEditing()"><i class="actionIcon fa fa-edit" title="Edit"> </i></li>
+					<!--<li class="actionIcon" tooltip="Activities" tooltip-placement="left"><i class="fa fa-check-circle" title="Activities"> </i></li>-->
+					<li class="actionIcon" ng-click="deleteUser($index)"  tooltip="Delete" tooltip-placement="left"><i class="fa fa-trash-o"  ></i></li>
+				</ul>
+			</div>
 		</div>
 	</div>
-	<ul class="userDiv">
-		<li  class="userLi" ng-repeat="user in users"  ng-show="showUser(user.id)">
-			<div>
-				<span class="userName"> {{user.fname}} {{user.lname}} </span>
-				<span class="userEmail"><a href="mailto: {{user.email}}">{{user.email}}</a></span>
-				<span class="userUpdate">
-					<div ng-click="enableEditUser(user)">
-						<span ng-bind="editUserText(user)"></span>
-					</div>
-					<div ng-show="showEditUser(user)" ng-include="'tpl/userForm.html'">
-						
-					</div>	
-				</span>
-				<span class="userDelete"><a href="#" ng-really-message="Deleting a member cannot be undone. Are you sure?" ng-really-click="deleteUser(user)" ng-really-click>Delete</a></span>
-			</div>
  			
 
-		</li>
+		<!--</li>-->
 	</ul>
 </div>
