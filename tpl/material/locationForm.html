@@ -1,0 +1,32 @@
+<md-dialog>
+    <md-toolbar>
+        <h4 style="padding-left:3%">Add New Location</h4>
+    </md-toolbar>
+   <md-content class="md-padding">
+    <form name="locationForm">
+        <md-input-container flex class="dialogForms">
+            <label>Name</label>
+            <input ng-model="loc.name" placeholder="Name">
+        </md-input-container>
+        <md-input-container flex class="dialogForms">
+            <label>Description</label>
+            <input ng-model="loc.description" placeholder="Description">
+        </md-input-container>
+        <div layout layout-sm="column">
+            <md-input-container flex class="dialogForms">
+                <label>Longitude</label>
+                <input ng-model="loc.longitude" placeholder="Longitude">
+            </md-input-container>
+            <md-input-container flex class="dialogForms">
+                <label>Latitude</label>
+                <input ng-model="loc.latitude" placeholder="Latitude">
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-button ng-click="answer(loc)"  class="md-primary">
+                Save
+            </md-button>
+        </div>
+       </form>
+</md-content>
+</md-dialog>

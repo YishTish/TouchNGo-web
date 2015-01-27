@@ -1,7 +1,5 @@
-app.controller("locationCtrl",['$scope', "firebaseService", function($scope, firebaseService){
+app.controller("locationCtrl",['$scope', "firebaseService", "$mdDialog", function($scope, firebaseService, $mdDialog){
 
-	//var ref = new Firebase(fbURL+"/locations");
-	//var sync = $firebase(ref);
 	var template;
 
 
@@ -32,6 +30,9 @@ app.controller("locationCtrl",['$scope', "firebaseService", function($scope, fir
 
 	})
 
+	$scope.activities = firebaseService.getList("activities");
+	$scope.users = firebaseService.getList("users");
+
 	$scope.editLocation = function(index, loc){
 		firebaseService.update("locations", index, loc).then(
 			function(response){
@@ -57,6 +58,30 @@ app.controller("locationCtrl",['$scope', "firebaseService", function($scope, fir
 			console.log("Element deleted");
 		});*/
 	};
+
+	$scope.showLocationForm = function(ev) {
+		$mdDialog.show({
+			templateUrl: 'tpl/material/locationForm.html',
+			targetEvent: ev,
+			controller: ['$scope','$mdDialog', "firebaseService", function($scope, $mdDialog, firebaseService){
+				$scope.answer = function(newLoc){
+					firebaseService.add('locations',newLoc);
+					$mdDialog.hide("New Location saved");
+				}
+			}]
+			}
+		)
+			.then(function(answer){
+				console.log(answer);
+			}
+			,function(){
+				console.log("canceled form");
+			});
+	};
+
+	$scope.answer = function(str){
+		console.log(str);
+	}
 
 
 	$scope.getFormTitle = function(){

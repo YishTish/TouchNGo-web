@@ -1,13 +1,6 @@
-<div  ng-controller="locationCtrl">
+<div  ng-controller="timelineCtrl">
 	<div class="">
 
-		<md-tabs md-selected="selectedIndex">
-			<md-tab ng-repeat="location in locations" ng-disabled="tab.disabled" label="{{location.name}}" class="">
-				<div class="tng-tab tab{{$index%4}} tab-content" layout="column" layout-fill layout-align="space-around">
-					<h2>{{location.name}}</h2>
-					<div>{{location.description}}</div>
-					<div>{{location.latitude}} / {{location.longitude}}</div>
-				</div>
 
 				<div class="listWrapper">
 					<section>
@@ -18,6 +11,7 @@
 									<thead>
 									<TR>
 										<TH>When</TH>
+										<TH>Activity</TH>
 										<TH>Who</TH>
 										<TH>Where</TH>
 										<TH>Comments</TH>
@@ -25,8 +19,9 @@
 									</thead>
 									<tr>
 									</tr>
-									<tr ng-repeat="activity in activities" ng-show="activity.locationKey==location.$id">
+									<tr ng-repeat="activity in activities">
 										<td><date-field date="activity.timestamp"></date-field></td>
+										<td>{{locations.$getRecord(activity.locationKey).name}}</td>
 										<td>{{users.$getRecord(activity.userKey).name}}</td>
 										<td>Longitude: {{activity.longitude}}
 											<br />
@@ -44,12 +39,5 @@
 						</md-content>
 					</section>
 				</div>
-
-			</md-tab>
-		</md-tabs>
-		<md-content style="padding-left:2%">
-			<md-button  class="md-primary md-raised" ng-click="showLocationForm($event)">Add New</md-button>
-		</md-content>
-
 
 </div></div>

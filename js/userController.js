@@ -1,18 +1,42 @@
-app.controller("userCtrl", [ "$scope","$firebase", "fbURL",function($scope, $firebase, fbURL){
+app.controller("userCtrl", [ "$scope","$firebase", "fbURL", "$filter", "firebaseService",function($scope, $firebase, fbURL, $filter, firebaseService){
 
-	var ref = new Firebase(fbURL+'/users');
-	var sync = $firebase(ref);
+	var usersRef = new Firebase(fbURL+'/users');
+	var usersSync = $firebase(usersRef);
+
+	var activitiesRef = new Firebase(fbURL+'/activities');
+	var activitiesSync = $firebase(activitiesRef);
+
+	$scope.userArray = firebaseService.getList("users");
+	$scope.activityArray = firebaseService.getList("activities");
+	$scope.locationArray = firebaseService.getList("locations");
 
 
-
-	$scope.users = sync.$asArray();
+	$scope.users = usersSync.$asArray();
 	$scope.user = { fname: "", lname: "", email:""};
 	
+	$scope.activities = activitiesSync.$asArray();
+
+
+
+	$scope.formatDate = function(rawTS){
+		if(rawTS.toString().length == 10){
+			rawTS = rawTS *1000;
+		}
+	//	console.log($filter('date')(rawTS,'short'));
+		return $filter('date')(rawTS,'dd/M/yyyy H:mm');
+	};
+
+
+
+
 	for(user in $scope.users){
 		user.editing = false;
 	}
 
 	insertingNewUser = false;
+
+
+
 
 	$scope.editUser = function(user){
 		user.$update();

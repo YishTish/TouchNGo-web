@@ -1,5 +1,7 @@
-var app = angular.module('tngweb',['ngRoute', 'firebase',  'ui.bootstrap']).
-	value('fbURL' , 'https://resplendent-fire-842.firebaseio.com');
+//var app = angular.module('tngweb',['ngRoute', 'firebase',  'ui.bootstrap', 'pascalprecht.translate']).
+//	value('fbURL' , 'https://resplendent-fire-842.firebaseio.com');
+var app = angular.module('tngweb',['ngRoute', 'firebase',  'pascalprecht.translate', 'ngMaterial', 'ngMessages']);
+app.value('fbURL' , 'https://resplendent-fire-842.firebaseio.com');
 
 
 app.controller("navCtrl", function($scope){
@@ -17,28 +19,30 @@ app.controller("navCtrl", function($scope){
  templateUrl: 'tpl/users.html',
  controller: 'userCtrl'
  }).when('/locations',{
-   templateUrl: 'tpl/locations.html',
-   //controller: 'locationCtrl'
- }).when('/locations1',{
- templateUrl: 'tpl/locations1.html',
-     //controller: 'locationCtrl'
+   templateUrl: 'tpl/locations.html'
+ }).when('/timeline',{
+ templateUrl: 'tpl/timeline.html'
  })
  }
  ]);
+
+
+if (navigator.geolocation) {
+ console.log('Geolocation is supported!');
+}
+else {
+ console.log('Geolocation is not supported for this Browser/OS version yet.');
+}
+
+
 /*
- app.config(function (RestangularProvider){
- RestangularProvider.setBaseUrl('http://localhost:9000')
- });
-
-
- app.factory("btdtResource", function($resource){
- var btdtResource = $resource("http://localhost:9000/members/:id", {id:"@id"},
- {'update' :{method : 'PUT', url : "http://localhost:9000/member"},
- 'save'  :{method : 'POST', url : "http://localhost:9000/member" }
- });
- return btdtResource;
- });
-
- */
-
-
+window.onload = function() {
+ var startPos;
+ var geoSuccess = function(position) {
+  startPos = position;
+  document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+  document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+ };
+ navigator.geolocation.getCurrentPosition(geoSuccess);
+};
+*/

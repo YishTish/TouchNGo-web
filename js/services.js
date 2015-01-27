@@ -41,6 +41,11 @@ app.factory(
 					listToReturn = firebaseArray;
 					return listToReturn;
 				},
+				getByKey: function(tableName, key){
+					sync = $firebase(new Firebase(fbURL+"/"+tableName));
+					var locationTable = sync.$asArray();
+					return locationTable.$getRecord(key);
+				},
 				update: function(tableName, data){
 					console.log("asassa");
 					connection = new Firebase(fbURL+"/"+tableName);//+"/"+data.$id);
@@ -54,13 +59,6 @@ app.factory(
 						}
 					);
 
-					/*data.$save();
-					console.log(data.$id);
-					connection = new Firebase(fbURL+"/"+tableName);
-					sync = $firebase(connection);
-					firebaseArray.$getRecord(data.key());
-					return sync.$update(data);
-					*/
 				}
 			}
 		}]);

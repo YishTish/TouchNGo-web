@@ -1,47 +1,90 @@
 <div class="usersDiv entityWrapper" ng-controller="userCtrl">
 
-	<div class="pageTitle">
-		<!--<h1 >Locations</h1>-->
-		<div class="sub-nav" ng-init="divToDisplay='list'">
-			<div ng-click="divToDisplay='new'"> <i class="fa fa-plus-circle"> </i> New </div>
-			<div > | </div>
-			<div ng-click="divToDisplay='list'"> <i class="fa fa-list"> </i> List</div>
-		</div>
-		<div class="clearfix"></div>
-	</div>
-	<div ng-show="divToDisplay=='new'" ng-include="'tpl/userForm.html'">
+	<!--<div class="pageTitle">-->
 
-	</div>
+	<!--<div ng-show="divToDisplay=='new'" ng-include="'tpl/userForm.html'">-->
+
+	<!--</div>-->
 	<!--<ul class="userDiv">-->
 		<!--<li class="userLi" ng-repeat="user in users"  ng-show="true">-->
-	<div class="listWrapper">
-		<div ng-repeat="user in users" class="itemList" ng-show="true" ng-class="{'itemListSelected': $index==selectedItem, 'itemListNotSelected': $index!=selectedItem }" ng-click="selectItem($index)">
-			<div class="words">
-				<div>{{user.fname}} {{user.lname}}</div>
-				<div>{{user.email}}</div>
+	<md-tabs md-selected="selectedIndex">
+		<md-tab ng-repeat="user in users" ng-disabled="tab.disabled" label="{{user.name}}" class="">
+			<div class="tng-tab tab{{$index%4}} tab-content" layout="column" layout-fill layout-align="space-around">
+				<h2>{{user.name}}</h2>
+				<div>Email: {{user.email }}</div>
+				<div>Memeber since: {{user.joinDate | date:'medium'}}</div>
 			</div>
-			<!--<span class="userName"> {{user.fname}} {{user.lname}} </span>-->
-			<!--<span class="userEmail"><a href="mailto: {{user.email}}">{{user.email}}</a></span>-->
-			<!--<span class="userUpdate">-->
-				<!--<div ng-click="enableEditUser(user)">-->
-					<!--<span ng-bind="editUserText(user)"></span>-->
-				<!--</div>-->
-				<!--<div ng-show="showEditUser(user)" ng-include="'tpl/userForm.html'">-->
-					<!---->
-				<!--</div>	-->
-			<!--</span>-->
-			<!--<span class="userDelete"><a href="javascript:void(0)" ng-really-message="Deleting a member cannot be undone. Are you sure?" ng-really-click="deleteUser($index)" ng-really-click>Delete</a></span>-->
-			<div class="actionsDiv">
-				<ul class="itemActions">
-					<li class="actionIcon" tooltip="Edit" tooltip-placement="left" ng-click="startEditing()"><i class="actionIcon fa fa-edit" title="Edit"> </i></li>
-					<!--<li class="actionIcon" tooltip="Activities" tooltip-placement="left"><i class="fa fa-check-circle" title="Activities"> </i></li>-->
-					<li class="actionIcon" ng-click="deleteUser($index)"  tooltip="Delete" tooltip-placement="left"><i class="fa fa-trash-o"  ></i></li>
-				</ul>
-			</div>
-		</div>
-	</div>
- 			
 
-		<!--</li>-->
-	</ul>
+			<div class="listWrapper">
+				<!--<div ng-repeat="user in users" class="itemList" ng-show="true" ng-class="{'itemListSelected': $index==selectedItem, 'itemListNotSelected': $index!=selectedItem }" ng-click="selectItem($index)">-->
+					<!--<div class="words">
+						<div>{{user.fname}} {{user.lname}}</div>
+						<div>{{user.email}}</div>
+					</div>-->
+					<!--<hr />-->
+					<section>
+						<md-content style="height: 300px; width: 80%">
+							<div class="table-responsive-vertical shadow-z-1">
+								<!-- Table starts here -->
+								<table id="table" st-safe-src="rowCollection" class="table table-striped">
+									<thead>
+									<TR>
+										<TH>When</TH>
+										<TH>Where</TH>
+										<TH>Activity</TH>
+										<TH>Comments</TH>
+									</TR>
+									</thead>
+									<tr>
+										<!--<th colspan="4"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>-->
+									</tr>
+								<tr ng-repeat="activity in activities" ng-show="activity.userKey==user.$id">
+									<td>{{formatDate(activity.timestamp)}}</td>
+									<td>Longitude: {{activity.longitude}}
+										<br />
+										Latitude: {{activity.latitude}}
+										<br/>
+										<a href="https://www.google.co.il/maps/@{{activity.latitude}},{{activity.longitude}},17z" target="map">Map</a>
+									</td>
+									<td>{{locationArray.$getRecord(activity.locationKey).name}}</td>
+									<td>{{activity.comments}}</td>
+
+								</tr>
+
+								</table>
+						<!--<md-list>
+							<md-item ng-repeat="activity in activities" ng-show="activity.userKey==user.$id">
+								<md-item-content>
+									<div class="md-tile-content">
+										<div style="float:left">
+											<h2>Where:</h2>
+											<h3>Longitude: {{activity.longitude}}
+												<br /> Latitude: {{activity.latitude}}
+												<br /> <a href="https://www.google.co.il/maps/@{{activity.latitude}},{{activity.longitude}},17z" target="map">Map</a>
+											</h3>
+										</div>
+										<div style="float: left;">
+											<h2>When:</h2>
+											<h4>{{formatDate(activity.timestamp)}}</h4>
+										</div>
+										<div style="float:left">
+											<h2>Activity</h2>
+											<h4>{{locationArray.$getRecord(activity.locationKey).name}}</h4>
+										</div>
+										<div style="float:left;">
+											<h2>Comments</h2>
+											<p>{{activity.comments}}</p>
+										</div>
+									</div>
+								</md-item-content>
+							</md-item>
+						</md-list>-->
+						</md-content>
+					</section>
+				</div>
+		 </md-tab>
+	</md-tabs>
+
+	</div>
+
 </div>

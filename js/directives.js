@@ -83,3 +83,25 @@ app.directive('saveLocation', function(){
         }
     }
 });
+
+app.directive('dateField', function(){
+    return {
+        restrict: 'E',
+        scope: {
+            date: '='
+        },
+        template: '<div>{{formatDate()}}</div>',
+        replace: 'true',
+        controller: ['$scope', '$filter', function($scope, $filter)
+            {
+                $scope.formatDate = function(){
+                    if($scope.date.toString().length == 10){
+                        $scope.date = $scope.date *1000;
+                    }
+                    //	console.log($filter('date')(rawTS,'short'));
+                    return $filter('date')($scope.date,'dd/M/yyyy H:mm');
+                }
+        }]
+
+    }
+});
