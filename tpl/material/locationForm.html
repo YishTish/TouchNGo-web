@@ -15,12 +15,14 @@
         <div layout layout-sm="column">
             <md-input-container flex class="dialogForms">
                 <label>Longitude</label>
-                <input ng-model="loc.longitude" placeholder="Longitude">
+                <input ng-model="loc.longitude" id="loc.longitude" placeholder="Longitude">
             </md-input-container>
-            <md-input-container flex class="dialogForms">
+            <md-input-container flex  class="dialogForms">
                 <label>Latitude</label>
-                <input ng-model="loc.latitude" placeholder="Latitude">
+                <input ng-model="loc.latitude" id="loc.latitude" placeholder="Latitude">
             </md-input-container>
+            <md-button ng-click="populatePosition()" class="md-button" ng-show="populateLocationVisible">Get Current Location</md-button>
+            <md-progress-circular md-mode="indeterminate" ng-hide="populateLocationVisible"></md-progress-circular>
         </div>
         <div layout="row">
             <md-button ng-click="answer(loc)"  class="md-primary">
@@ -30,3 +32,4 @@
        </form>
 </md-content>
 </md-dialog>
+

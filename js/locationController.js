@@ -7,15 +7,6 @@ app.controller("locationCtrl",['$scope', "firebaseService", "$mdDialog", functio
 
 	formTitle = "New Location";
 
-	var resetTemplate = function(){
-		return {
-			name: "",
-			description: "",
-			longitude: "",
-			latitude: "",
-			code: ""
-		}
-	};
 
 	//$scope.locations = sync.$asArray();
 	//var fbService = new firebaseService();
@@ -67,7 +58,35 @@ app.controller("locationCtrl",['$scope', "firebaseService", "$mdDialog", functio
 				$scope.answer = function(newLoc){
 					firebaseService.add('locations',newLoc);
 					$mdDialog.hide("New Location saved");
-				}
+				};
+				$scope.populatePosition = function(){
+					var pos;
+					$scope.populateLocationVisible=false;
+					navigator.geolocation.getCurrentPosition(function(position){
+						pos = position;
+						document.getElementById("loc.longitude").focus();
+						setTimeout(100);
+						document.getElementById("loc.longitude").value = pos.coords.longitude;
+						document.getElementById("loc.longitude").blur();
+
+						document.getElementById("loc.latitude").focus();
+						document.getElementById("loc.latitude").value = pos.coords.latitude;
+						$scope.populateLocationVisible = true;
+						$scope.$apply();
+					})
+				};
+				$scope.populateLocationVisible = true;
+				/*
+				 window.onload = function() {
+				 var startPos;
+				 var geoSuccess = function(position) {
+				 startPos = position;
+				 document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+				 document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+				 };
+				 navigator.geolocation.getCurrentPosition(geoSuccess);
+				 };
+				 */
 			}]
 			}
 		)
