@@ -22,6 +22,8 @@ app.controller("navCtrl", function($scope){
    templateUrl: 'tpl/locations.html'
  }).when('/timeline',{
  templateUrl: 'tpl/timeline.html'
+ }).otherwise({
+  templateUrl: 'tpl/main.html'
  })
  }
  ]);

@@ -4,7 +4,7 @@
 		<md-tabs md-selected="selectedIndex">
 			<md-tab ng-repeat="location in locations" ng-disabled="tab.disabled" label="{{location.name}}" class="">
 				<div class="tng-tab tab{{$index%4}} tab-content" layout="column" layout-fill layout-align="space-around">
-					<h2>{{location.name}}</h2>
+					<h2><md-button class="md-button" ng-click="showLocationQR($event,$index)"><img src="https://api.qrserver.com/v1/create-qr-code/?size=45x45&data={{location.$id}}"/></md-button>{{location.name}} </h2>
 					<div>{{location.description}}</div>
 					<div>{{location.latitude}} / {{location.longitude}}</div>
 				</div>

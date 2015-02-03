@@ -76,17 +76,6 @@ app.controller("locationCtrl",['$scope', "firebaseService", "$mdDialog", functio
 					})
 				};
 				$scope.populateLocationVisible = true;
-				/*
-				 window.onload = function() {
-				 var startPos;
-				 var geoSuccess = function(position) {
-				 startPos = position;
-				 document.getElementById('startLat').innerHTML = startPos.coords.latitude;
-				 document.getElementById('startLon').innerHTML = startPos.coords.longitude;
-				 };
-				 navigator.geolocation.getCurrentPosition(geoSuccess);
-				 };
-				 */
 			}]
 			}
 		)
@@ -103,9 +92,32 @@ app.controller("locationCtrl",['$scope', "firebaseService", "$mdDialog", functio
 	}
 
 
-	$scope.getFormTitle = function(){
-		return formTitle;
-	}
+	$scope.showLocationQR = function(ev, index) {
+		var dialog = $mdDialog.show(
+		{
+			template: '<md-dialog style="height:500px;width:500px;text-align: center">'+
+						'<div style="margin-top: 15%;text-align: center;">' +
+						'<img width="150" height="150" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+$scope.locationId+'"/>'+
+						'</div>'+
+						'<div class="md-actions">'+
+						'<md-button ng-click="closeDialog()">Close</md-button>'+
+						'</div>'+
+						'</md-dialog>',
+			locals : {locationId: $scope.locations[index].$id},
+			controller: ['$scope','$mdDialog', 'locationId', function($scope, $mdDialog, locationId){
+				$scope.locationId = locationId;
+				$scope.closeDialog = function(){
+					$mdDialog.hide();
+				};
+			}
+
+			],
+			//.title($scope.locations[index].name)
+			//.content('<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+$scope.locations[index].$id+'">')
+			//.ariaLabel('Lucky day')
+			targetEvent: ev
+		})
+	};
 
 	$scope.getShortDescription = function(description){
 		var suffix = (description.length > 29) ? "..." : "";
