@@ -1,7 +1,7 @@
 <div  ng-controller="locationCtrl">
 	<div class="">
 
-		<md-tabs md-selected="selectedIndex">
+		<md-tabs md-selected="selectedIndex" class="tng-tabs">
 			<md-tab ng-repeat="location in locations" ng-disabled="tab.disabled" label="{{location.name}}" class="">
 				<div class="tng-tab tab{{$index%4}} tab-content" layout="column" layout-fill layout-align="space-around">
 					<h2><md-button class="md-button" ng-click="showLocationQR($event,$index)"><img src="https://api.qrserver.com/v1/create-qr-code/?size=45x45&data={{location.$id}}"/></md-button>{{location.name}} </h2>
@@ -17,10 +17,10 @@
 								<table id="table" st-safe-src="rowCollection" class="table table-striped">
 									<thead>
 									<TR>
-										<TH>When</TH>
-										<TH>Who</TH>
-										<TH>Where</TH>
-										<TH>Comments</TH>
+										<TH>{{ 'WHEN' | translate }}</TH>
+										<TH>{{ 'WHO' | translate }}</TH>
+										<TH>{{ 'WHERE' | translate }}</TH>
+										<TH>{{ 'COMMENTS' | translate }}</TH>
 									</TR>
 									</thead>
 									<tr>
@@ -48,7 +48,7 @@
 			</md-tab>
 		</md-tabs>
 		<md-content style="padding-left:2%">
-			<md-button  class="md-primary md-raised" ng-click="showLocationForm($event)">Add New</md-button>
+			<md-button  class="md-primary md-raised" ng-click="showLocationForm($event)">{{ 'ADD NEW' | translate }}</md-button>
 		</md-content>
 
 

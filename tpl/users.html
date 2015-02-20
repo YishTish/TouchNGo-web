@@ -7,12 +7,12 @@
 	<!--</div>-->
 	<!--<ul class="userDiv">-->
 		<!--<li class="userLi" ng-repeat="user in users"  ng-show="true">-->
-	<md-tabs md-selected="selectedIndex">
+	<md-tabs md-selected="selectedIndex" class="tng-tabs">
 		<md-tab ng-repeat="user in users" ng-disabled="tab.disabled" label="{{user.name}}" class="">
 			<div class="tng-tab tab{{$index%4}} tab-content" layout="column" layout-fill layout-align="space-around">
 				<h2>{{user.name}}</h2>
-				<div>Email: {{user.email }}</div>
-				<div>Memeber since: {{user.joinDate | date:'medium'}}</div>
+				<div>{{ 'EMAIL' | translate }}: {{user.email }}</div>
+				<div>{{ 'MEMBER SINCE' | translate }}: {{user.joinDate | date:'medium'}}</div>
 			</div>
 
 			<div class="listWrapper">
@@ -29,10 +29,10 @@
 								<table id="table" st-safe-src="rowCollection" class="table table-striped">
 									<thead>
 									<TR>
-										<TH>When</TH>
-										<TH>Where</TH>
-										<TH>Activity</TH>
-										<TH>Comments</TH>
+										<TH>{{ 'WHEN' | translate }}</TH>
+										<TH>{{ 'WHERE' | translate }}</TH>
+										<TH>{{ 'ACTIVITY' | translate }}</TH>
+										<TH>{{ 'COMMENTS' | translate }}</TH>
 									</TR>
 									</thead>
 									<tr>

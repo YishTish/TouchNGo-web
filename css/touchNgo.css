@@ -1,4 +1,4 @@
-.DynamicTabs .remove-tab {
+/*.DynamicTabs .remove-tab {
     margin-bottom: 40px; }
 .DynamicTabs .md-button {
     display: block; }
@@ -37,6 +37,15 @@
 .DynamicTabs .md-button.add-tab {
     margin-top: 20px;
     max-height: 30px !important; }
+*/
+
+.hebrewBody{
+    direction: rtl;
+}
+
+.englishBody{
+    direction: ltr;
+}
 
 
 .tab-content{
@@ -53,7 +62,7 @@
     padding-left:10%;
 }
 
-
+/*
 .dialogdemoBasicUsage .full {
     width: 100%;
     height: 100%; }
@@ -77,4 +86,10 @@
 .dialogForms > label{
     margin-bottom: 0px;
     font-weight: normal;
+}
+
+*/
+
+.tng-tabs{
+    display: inline;
 }

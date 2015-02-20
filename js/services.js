@@ -26,13 +26,12 @@ app.factory(
 			var connection;
 			var firebaseArray;
 			var sync;
+			var fbService = this;
 			return {
 				add: function (tableName, data){
 					connection = new Firebase(fbURL+"/"+tableName);
 					sync = $firebase(connection);
-					sync.$push(data).then(function(response) {
-						console.log("Data save to " + tableName);
-					});
+					return sync.$push(data);
 				},
 				getList: function(tableName){
 					connection = new Firebase(fbURL+"/"+tableName);
@@ -41,13 +40,15 @@ app.factory(
 					listToReturn = firebaseArray;
 					return listToReturn;
 				},
-				getByKey: function(tableName, key){
-					sync = $firebase(new Firebase(fbURL+"/"+tableName));
-					var locationTable = sync.$asArray();
-					return locationTable.$getRecord(key);
+				getByKey: function(tableName, key, callback){
+					sync = $firebase(new Firebase(fbURL+"/"+tableName+"/"+key));
+					var record = sync.$asObject();
+					record.$loaded().then(function(){
+						callback(record);
+					})
+					//return syncArray.$getRecord(key);
 				},
 				update: function(tableName, data){
-					console.log("asassa");
 					connection = new Firebase(fbURL+"/"+tableName);//+"/"+data.$id);
 					sync = $firebase(connection);
 					var list = sync.$asArray();
@@ -59,6 +60,10 @@ app.factory(
 						}
 					);
 
+				},
+				setDb: function(dbUrl){
+					fbURL = dbUrl;
+					return fbService;
 				}
 			}
 		}]);

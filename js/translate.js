@@ -7,19 +7,32 @@ app.config(['$translateProvider', function ($translateProvider) {
         'USERS': 'Users',
         'LOCATIONS': 'Locations',
         'TIMELINE': 'Timeline',
-        'SETTINGS': 'Settings'
+        'SETTINGS': 'Settings',
+        'EMAIL': 'Email',
+        'MEMBER SINCE': 'Member Since',
+        'WHEN': 'When',
+        'WHERE': 'Where',
+        'WHO': 'Who',
+        'ACTIVITY': 'Activity',
+        'COMMENTS': 'Comments',
+        'ADD NEW': 'Add New'
     });
 
     $translateProvider.translations('he', {
         'USERS': 'משתמשים',
         'LOCATIONS': 'מקומות',
         'TIMELINE': 'זמנים',
-        'SETTINGS': 'הגדרות'
+        'SETTINGS': 'הגדרות',
+        'EMAIL': 'דוא״ל',
+        'MEMBER SINCE': 'תאריך הרשמה',
+        'WHEN': 'מתי',
+        'WHERE': 'איפה',
+        'WHO': 'מי',
+        'ACTIVITY': 'פעילות',
+        'COMMENTS': 'הערות',
+        'ADD NEW':'הוסף חדש'
     });
-    $translateProvider.translations('de', {
-        'TITLE': 'Hallo',
-        'FOO': 'Dies ist ein Paragraph'
-    });
+
 
     $translateProvider.preferredLanguage('en');
 }]);

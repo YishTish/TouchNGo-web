@@ -97,15 +97,14 @@ app.controller("locationCtrl",['$scope', "firebaseService", "$mdDialog", functio
 		{
 			template: '<md-dialog style="height:500px;width:500px;text-align: center">'+
 						'<div style="margin-top: 15%;text-align: center;">' +
-						'<img width="150" height="150" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+$scope.locationId+'"/>'+
+						'<img width="150" height="150" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+$scope.locations[index].$id+'"/>'+
 						'</div>'+
 						'<div class="md-actions">'+
 						'<md-button ng-click="closeDialog()">Close</md-button>'+
 						'</div>'+
 						'</md-dialog>',
-			locals : {locationId: $scope.locations[index].$id},
-			controller: ['$scope','$mdDialog', 'locationId', function($scope, $mdDialog, locationId){
-				$scope.locationId = locationId;
+			controller: ['$scope','$mdDialog', function($scope, $mdDialog){
+
 				$scope.closeDialog = function(){
 					$mdDialog.hide();
 				};
