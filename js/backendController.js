@@ -4,8 +4,6 @@
 app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "$mdToast", "$http", function($translate, $scope, firebaseService, fbURL, $mdToast, $http) {
 
     firebaseService.setDb(fbURL);
-    getDomainCsrf();
-
 
     $scope.saveUser = function(callback){
         if($scope.user.$id){
@@ -45,17 +43,15 @@ app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "
             "phone": $scope.user.phone,
             "key": $scope.activity.$id
         }
-        var token ="";
-        getDomainCsrf().then(function(response){
-            token = response.csrf_token;
-            $http.post("http://api.touchngo.io",message)
-                .success(function(data, status, headers, config) {
-                    console.log(data);
-                }).
-                error(function(data, status, headers, config) {
-                    console.log(data);
-                });
-        });
+
+        $http.post("http://api.touchngo.io",message)
+            .success(function(data, status, headers, config) {
+                console.log(data);
+            }).
+            error(function(data, status, headers, config) {
+                console.log(data);
+            });
+
     };
 
     getDomainCsrf = function(){
