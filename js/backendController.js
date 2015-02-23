@@ -4,6 +4,7 @@
 app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "$mdToast", "$http", function($translate, $scope, firebaseService, fbURL, $mdToast, $http) {
 
     firebaseService.setDb(fbURL);
+    getDomainCsrf();
 
 
     $scope.saveUser = function(callback){
@@ -44,16 +45,31 @@ app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "
             "phone": $scope.user.phone,
             "key": $scope.activity.$id
         }
-        //$http.get("https://rest.nexmo.com/sms/json?api_key=835ff543&api_secret=68d3f00d&from=Yishai&to="+$scope.user.phone+"&text=Hello.+Please+follow+this+link:+https://resplendent-fire-842.firebaseapp.com/client.html#/?case="+$scope.activity.$id)
-
+        var token ="";
+        getDomainCsrf().then(function(response){
+            token = response.csrf_token;
             $http.post("http://api.touchngo.io",message)
-            .success(function(data, status, headers, config) {
-            console.log(data);
-        }).
-            error(function(data, status, headers, config) {
-               console.log(data);
-            });
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                }).
+                error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+        });
     };
+
+    getDomainCsrf = function(){
+        if($location.host() != 'touchngo.io'){
+            return "";
+        }
+        else{
+            $http.get("http://api.touchngo.io/getCsrf").then(function(response){
+                $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+                $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+                console.log("csrf token set");
+            });
+        }
+    }
 
     saveActivityData = function(activity){
         firebaseService.add("activities",activity).then(assignActivityObject);
