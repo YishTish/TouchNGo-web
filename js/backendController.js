@@ -40,7 +40,13 @@ app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "
 
 
     $scope.sendSms = function(){
-        $http.get("https://rest.nexmo.com/sms/json?api_key=835ff543&api_secret=68d3f00d&from=Yishai&to="+$scope.user.phone+"&text=Hello.+Please+follow+this+link:+https://resplendent-fire-842.firebaseapp.com/client.html#/?case="+$scope.activity.$id)
+        var message = {
+            "phone": $scope.user.phone,
+            "key": $scope.activity.$id
+        }
+        //$http.get("https://rest.nexmo.com/sms/json?api_key=835ff543&api_secret=68d3f00d&from=Yishai&to="+$scope.user.phone+"&text=Hello.+Please+follow+this+link:+https://resplendent-fire-842.firebaseapp.com/client.html#/?case="+$scope.activity.$id)
+
+            $http.post("http://api.touchngo.io",message)
             .success(function(data, status, headers, config) {
             console.log(data);
         }).
