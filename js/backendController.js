@@ -1,7 +1,7 @@
 /**
  * Created by mrfonedo on 2/9/15.
  */
-app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "$mdToast", "$http", function($translate, $scope, firebaseService, fbURL, $mdToast, $http) {
+app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "$mdToast", "$http",function($translate, $scope, firebaseService, fbURL, $mdToast, $http, $cookies) {
 
     firebaseService.setDb(fbURL);
 
@@ -15,7 +15,7 @@ app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "
                     assignUserObject(response);
                     $scope.activity.userKey = response.key();
                     callback($scope.activity);
-                    $mdToast.show($mdToast.simple().content('Activity Saved. Client page: <a href=\"/client.html#/?case='+$scope.activity.$id+'\">Click</a>'));
+                    $mdToast.show($mdToast.simple().content('Activity Saved'));
             });
         }
 
@@ -42,9 +42,9 @@ app.controller("backendCtrl",["$translate","$scope","firebaseService","fbURL", "
         var message = {
             "phone": $scope.user.phone,
             "key": $scope.activity.$id
-        }
+        };
 
-        $http.post("http://api.touchngo.io",message)
+        $http.post("http://api.touchngo.io/sendSms", message)
             .success(function(data, status, headers, config) {
                 console.log(data);
             }).
