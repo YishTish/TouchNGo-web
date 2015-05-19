@@ -43,22 +43,22 @@
 
     <meta name="viewport" content="width=device-width, user-scalable=no" />
 
-
 </head>
 <body ng-app="tng-webapp" ng-controller="clientCtrl">
-
-
 <!--<md-dialog aria-label="Add New Location">-->
 
 <md-toolbar>
     <img src="img/coollogo_com-57502237.png" width="344">
 </md-toolbar>
+ <div layout="row" layout-sm="row" layout-align="space-around" ng-show="user.$id">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
 <div style="padding: 5% 10%">
     <h2>Hello {{user.firstName}} {{user.lastName}}</h2>
     <p>Thank you for contacting us. We have received from you the following request:</p>
-    <div style="padding:3%;margin:2% 5%;background-color: #b3c4c7">
-        <h3>{{activity.name}}</h3>
-        <p>{{activity.description}}</p>
+    <div style="padding:3%">
+        <h3>Title: {{activity.name}}</h3>
+        <p>Description: <br /> {{activity.description}}</p>
 
         <!--Longitude: {{longitude}}<br/>-->
         <!--Latitude: {{latitude}}-->
